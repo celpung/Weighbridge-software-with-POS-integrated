@@ -1,0 +1,120 @@
+<template>
+  <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between mb-3 mt-3">
+      <button @click="back()" class="btn"><i class="fas fa-arrow-left"></i> Kembali</button>
+      <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Filter</button>
+    </div>
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Debet</th>
+              <th scope="col">Kredit</th>
+              <th scope="col">Sisa Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(patty, index) in pattys.data" :key="index">
+              <td>{{ patty.date }}</td>
+              <td>{{ patty.info }}</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(patty.debt) }}</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(patty.credit) }}</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(patty.balance) }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">Total</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(pattys.sum_debt) }}</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(pattys.sum_credit) }}</td>
+              <td>{{ new Intl.NumberFormat("id-ID").format(pattys.balance) }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label for="start_date" class="form-label">Dari Tanggal</label>
+                <div class="input-group">
+                  <input id="start_date" v-model="start_date" type="date" class="form-control shadow-none border-end-0" />
+                  <div class="input-group-text bg-white"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <label for="end_date" class="form-label">Sampai Tanggal</label>
+                <div class="input-group">
+                  <input id="end_date" v-model="end_date" type="date" class="form-control shadow-none border-end-0" />
+                  <div class="input-group-text bg-white"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" @click="filterPatty()" data-bs-dismiss="modal" class="btn btn-primary">Filter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "../../services/axios";
+export default {
+  name: "Patty",
+  data() {
+    return {
+      pattys: [],
+    };
+  },
+
+  methods: {
+    getPatty() {
+      let loader = this.$loading.show({
+        loader: "dots",
+        color: "#f35b3f",
+        opacity: 0.7,
+      });
+      axios.get("get-patty").then((result) => {
+        this.pattys = result.data;
+        loader.hide();
+      });
+    },
+
+    filterPatty() {
+      let loader = this.$loading.show({
+        loader: "dots",
+        color: "#f35b3f",
+        opacity: 0.7,
+      });
+      axios.post('filter-patty', {start_date: this.start_date, end_date: this.end_date}).then((result) => {
+        this.pattys = result.data;
+        loader.hide();
+      });
+    },
+
+    back() {
+      this.$router.go(-1);
+    }
+  },
+
+  mounted() {
+    this.getPatty();
+  },
+};
+</script>

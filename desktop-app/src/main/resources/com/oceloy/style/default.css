@@ -1,0 +1,116 @@
+.main {
+    -fx-background-color: #eceaea;
+}
+
+.main .label {
+    -fx-font-weight: bold;
+}
+
+TextField {
+    -fx-min-height: 25px;
+    -fx-border-color: #333333;
+    -fx-border-radius: 5;
+    -fx-font-weight : bold;
+    -fx-font-size: 12px;    
+    -fx-border-width: 1;
+}
+
+PasswordField {
+    -fx-min-height: 25px;
+    -fx-border-color: #333333;
+    -fx-border-radius: 5;
+    -fx-font-weight : bold;
+    -fx-font-size: 12px;
+    -fx-border-width: 1;
+}
+
+.combo-box,
+.choice-box {    
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-min-height: 25px;
+    -fx-border-color: #333333;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+}
+
+MenuBar {
+    -fx-background-color: transparent;
+}
+
+.header {
+    -fx-background-color: #333333;
+}
+
+.header .label {
+    -fx-text-fill: #eceaea;
+}
+
+
+/* --- custom style for special label --- */
+#lbl_company_name {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+#lbl_bridge_id {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#lbl_weight {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+}
+
+#lbl_kg {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+/* --- BUTTON STYLE -- */
+.btn_basic{
+    -fx-background-color: #333333;   
+    -fx-text-fill: #ffffff;    
+    -fx-font-weight: bold;    
+    -fx-min-height: 25px;
+}
+
+.btn_close {
+    -fx-background-color: transparent;
+}
+
+/*--- table view style --- */
+.table-view {
+    -fx-font-weight:bold;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-pref-height: 30;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #333333;    
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent; 
+    -fx-font-weight:bold;
+    -fx-text-fill: white;
+}
+
+.table-view .table-column{
+    -fx-alignment:center;    
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #5c5a5a;
+    -fx-font-weight:bold;
+}
+
+.table-row-cell:selected .text {
+       -fx-fill: white ;
+}
+
