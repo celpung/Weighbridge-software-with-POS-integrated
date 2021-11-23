@@ -27,6 +27,7 @@
               <option value="-">-</option>
               <option value="Beban Penjualan">Beban Penjualan</option>
               <option value="Beban Operasional">Beban Operasional</option>
+              <option value="Beban Administrasi">Beban Administrasi</option>
             </select>
           </div>
 
