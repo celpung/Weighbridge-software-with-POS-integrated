@@ -92,10 +92,12 @@
               </td>
               <td v-if="calibration.date_out == '-'" class="align-middle table-warning">
                 <button @click="setDetail(index)" data-bs-toggle="modal" data-bs-target="#detailModal" class="btn btn-sm btn-info text-white">Detail</button>
+                <button v-if="level == 'admin'" @click="editData(index)" data-bs-dismiss="modal" type="button" class="btn btn-sm btn-success">Edit</button>
                 <button @click="deleteData(calibration.ticket)" v-if="level == 'admin'" class="btn btn-sm btn-danger text-white">Hapus</button>
               </td>
               <td v-else class="align-middle">
                 <button @click="setDetail(index)" data-bs-toggle="modal" data-bs-target="#detailModal" class="btn btn-sm btn-info text-white">Detail</button>
+                <button v-if="level == 'admin'" @click="editData(index)" data-bs-dismiss="modal" type="button" class="btn btn-sm btn-success">Edit</button>
                 <button @click="deleteData(calibration.ticket)" v-if="level == 'admin'" class="btn btn-sm btn-danger text-white">Hapus</button>
               </td>
             </tr>
@@ -383,9 +385,8 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer d-flex justify-content-between">
-            <button type="button" class="btn btn-secondary m-1" data-bs-dismiss="modal">Tutup</button>
-            <button v-if="level == 'admin'" @click="editData()" data-bs-dismiss="modal" type="button" class="btn btn-success m-1">Edit Data</button>
+          <div class="modal-footer d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary m-1" data-bs-dismiss="modal">Tutup</button>            
           </div>
         </div>
       </div>
@@ -450,11 +451,9 @@ export default {
     },
 
     setFilterData() {
-      axios.get("filter-value").then((result) => {
-        this.products = result.data.products;
-        this.customers = result.data.customers;
-        this.suppliers = result.data.suppliers;
-      });
+      this.products = [...new Set(this.calibrations.map((item) => item.product_name))];
+      this.customers = [...new Set(this.calibrations.map((item) => item.customer))];
+      this.suppliers = [...new Set(this.calibrations.map((item) => item.supplier))];
     },
 
     filterData() {
@@ -627,7 +626,8 @@ export default {
       this.details = this.calibrations[value];
     },
 
-    editData() {
+    editData(value) {
+      this.details = this.calibrations[value];
       this.$store.dispatch("editData", this.details);
     },
   },

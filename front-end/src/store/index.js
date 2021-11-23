@@ -71,7 +71,8 @@ export default createStore({
 
     editData: ({commit}, model) => {
       commit("setEditData", model);
-      router.push("/edit-data");
+      //router.push("/edit-data");
+      window.open("/edit-data", '_blank');
     },
 
     profile: ({ commit }, model) => {

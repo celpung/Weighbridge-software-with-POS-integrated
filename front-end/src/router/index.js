@@ -18,6 +18,7 @@ import Transaction from '../views/report/Transaction.vue'
 import Report from '../views/report/Report.vue'
 import Expense from '../views/report/Expense.vue'
 import Income from '../views/report/Income.vue'
+import ProfitLost from '../views/report/ProfitLost.vue'
 
 const authGuard = (to, from, next) => {
   if (store.getters.isAuthenticated) {
@@ -196,6 +197,15 @@ const routes = [
     beforeEnter: authGuard,
     meta: {
       title: "Pemasukan"
+    },
+  },
+  {
+    path: '/pl',
+    name: 'ProfitLost',
+    component: ProfitLost,
+    beforeEnter: authGuard,
+    meta: {
+      title: "Laba Rugi"
     },
   },
   {

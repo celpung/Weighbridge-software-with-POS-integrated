@@ -22,7 +22,6 @@ class ArtController extends Controller
 
             Artisan::call('vendor:publish', array('--provider' => "Laravel\Sanctum\SanctumServiceProvider"));
 
-
             dd('Migration run successfully');
         } catch (Exception $ex) {
             echo $ex->getMessage();
@@ -627,6 +626,11 @@ class ArtController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function set_tag()
+    {
+        
     }
 
 
