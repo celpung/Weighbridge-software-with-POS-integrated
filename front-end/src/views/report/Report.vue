@@ -29,6 +29,7 @@
     <ProfitLost />
     <Out />
     <In />
+    <TransactionTable />
   </div>
 </template>
 
@@ -37,11 +38,13 @@ import { computed } from '@vue/reactivity';
 import ProfitLost from "./ProfitLost.vue";
 import Out from './Out.vue'
 import In from './In.vue'
+import TransactionTable from './TransactionTable.vue'
 export default {
   components: {
     ProfitLost,
     Out,
     In,
+    TransactionTable
   },
 
   data() {

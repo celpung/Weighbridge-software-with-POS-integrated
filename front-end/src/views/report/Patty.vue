@@ -2,10 +2,19 @@
   <div class="container-fluid">
     <div class="container-fluid d-flex justify-content-between mb-3 mt-3">
       <button @click="back()" class="btn"><i class="fas fa-arrow-left"></i> Kembali</button>
-      <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Filter</button>
+      <div>
+        <div class="row">
+          <div class="col">
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Filter</button>
+          </div>
+          <div class="col">
+            <button data-bs-toggle="modal" data-bs-target="#trxModal" class="btn btn-success">Transaksi</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
-      <div class="table-responsive">
+      <div class="table-responsive" style="max-height: 79vh;">
         <table class="table text-center">
           <thead>
             <tr>
@@ -42,7 +51,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form>
@@ -70,12 +79,30 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="trxModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Transaksi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <transaction />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "../../services/axios";
+import Transaction from "./Transaction.vue";
 export default {
+  components: {
+    Transaction,
+  },
   name: "Patty",
   data() {
     return {
@@ -102,7 +129,7 @@ export default {
         color: "#f35b3f",
         opacity: 0.7,
       });
-      axios.post('filter-patty', {start_date: this.start_date, end_date: this.end_date}).then((result) => {
+      axios.post("filter-patty", { start_date: this.start_date, end_date: this.end_date }).then((result) => {
         this.pattys = result.data;
         loader.hide();
       });
@@ -110,7 +137,7 @@ export default {
 
     back() {
       this.$router.go(-1);
-    }
+    },
   },
 
   mounted() {

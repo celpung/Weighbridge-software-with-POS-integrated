@@ -22,16 +22,6 @@
           </div>
 
           <div class="mb-2">
-            <label for="select_type" class="form-label">Tag</label>
-            <select id="select_type" v-model="tag" class="form-control">
-              <option value="-">-</option>
-              <option value="Beban Penjualan">Beban Penjualan</option>
-              <option value="Beban Operasional">Beban Operasional</option>
-              <option value="Beban Administrasi">Beban Administrasi</option>
-            </select>
-          </div>
-
-          <div class="mb-2">
             <label for="select_account" class="form-label">Pilih Akun</label>
             <select id="select_account" v-model="account" class="form-control">
               <option>-</option>
@@ -39,6 +29,22 @@
               <option>Patty</option>
               <option>Bank</option>
             </select>
+          </div>
+
+          <div class="mb-2">
+            <label for="select_type" class="form-label">Tag</label>
+            <select id="select_type" v-model="tag" class="form-control">
+              <option value="-">-</option>
+              <option value="Beban Penjualan">Beban Penjualan</option>
+              <option value="Beban Operasional">Beban Operasional</option>
+              <option value="Beban Administrasi">Beban Administrasi</option>
+              <option value="tambah_dana">Tambah Dana</option>
+            </select>
+          </div>
+
+          <div class="mb-2">
+            <label for="info" class="form-label">Spesifik</label>
+            <input type="text" v-model="specific" class="form-control shadow-none" />
           </div>
 
           <div class="mb-2">
@@ -64,12 +70,14 @@
 import axios from '../../services/axios'
 
 export default {
+  name: "Transaction",
   methods: {
     addTransaction() {
       let model = {
         date: this.date,
         type: this.type,
         account: this.account,
+        specific: this.specific,
         info: this.info,
         ammount: this.ammount,
         tag: this.tag,

@@ -2,7 +2,17 @@
   <div class="container-fluid">
     <div class="container-fluid d-flex justify-content-between mb-3 mt-3">
       <button @click="back()" class="btn"><i class="fas fa-arrow-left"></i> Kembali</button>
-      <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Filter</button>
+      <div>
+        <div class="row">
+          <div class="col">
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Filter</button>
+          </div>
+          <div class="col">
+            <button data-bs-toggle="modal" data-bs-target="#trxModal" class="btn btn-success">Transaksi</button>
+          </div>
+        </div>
+      </div>
+      
     </div>
     <div class="row">
       <div class="table-responsive">
@@ -70,12 +80,29 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="trxModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Transaksi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <transaction />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "../../services/axios";
+import Transaction from "./Transaction.vue";
 export default {
+  components: {
+    Transaction,
+  },
   name: "bank",
   data() {
     return {

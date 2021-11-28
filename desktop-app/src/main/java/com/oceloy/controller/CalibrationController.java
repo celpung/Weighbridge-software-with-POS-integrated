@@ -959,6 +959,18 @@ public class CalibrationController implements Initializable {
         listen_data.play();
     }
 
+    private void set_bank_trf() {
+        int ttl_price = Integer.parseInt(tf_total_price.getText().replaceAll("[^0-9]+", ""));
+        int trf_ammount = 0;
+        if(tf_transfer.getText().equals("")){
+            trf_ammount = 0;
+        } else {
+            trf_ammount = Integer.parseInt(tf_transfer.getText().replaceAll("[^0-9]+", ""));
+        }
+        int csh_ammount = ttl_price-trf_ammount;
+        tf_cash.setText(num.format(csh_ammount));
+    }
+
     // --------- method end ----------//
 
     @FXML
@@ -1062,10 +1074,12 @@ public class CalibrationController implements Initializable {
             String status = cb_status.getSelectionModel().getSelectedItem();
             int ow = Integer.parseInt(tf_outweight.getText().replaceAll("[^0-9]+", ""));
 
-            if (status == "MASUK" && ow != 0) {
+            if (ow != 0) {
                 int ttp = ow * price;
                 tf_total_price.setText(num.format(ttp));
             }
+
+            set_bank_trf();
         } else if (mode.equals("edit")) {
             int g = Integer.parseInt(tf_gross.getText().replaceAll("[^0-9]+", ""));
             int t = Integer.parseInt(tf_tare.getText().replaceAll("[^0-9]+", ""));
@@ -1128,12 +1142,13 @@ public class CalibrationController implements Initializable {
             String status = cb_status.getSelectionModel().getSelectedItem();
             int ow = Integer.parseInt(tf_outweight.getText().replaceAll("[^0-9]+", ""));
 
-            if (status.equals("MASUK") && ow != 0) {
+            if (ow != 0) {
                 int ttp = ow * price;
                 tf_total_price.setText(num.format(ttp));
             }
 
             cb_customer_supplier.setDisable(false);
+            set_bank_trf();
         }
     }
 
@@ -1701,5 +1716,10 @@ public class CalibrationController implements Initializable {
                 lbl_gap.setText("0");
             }
         }
+    }
+
+    @FXML
+    void tf_transfer_keyreleased() {
+        set_bank_trf();
     }
 }
