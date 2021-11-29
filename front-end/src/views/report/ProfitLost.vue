@@ -586,7 +586,7 @@ export default {
 
       //penyusutan
       this.penyusutanData = this.calibrations.filter(function (value) {
-        return value.product_status == "KELUAR" && value.product_name == "SAMPAH GILINGAN";
+        return value.product_status == "KELUAR" && value.product_name == "SAMPAH GILINGAN" || value.product_name == "SAMPAH SHREDERD";
       });
       this.penyusutanNetto = this.penyusutanData.reduce(function (accumulator, item) {
         return accumulator + parseInt(item.nett);

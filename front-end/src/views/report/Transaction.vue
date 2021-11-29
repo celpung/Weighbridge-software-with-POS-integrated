@@ -43,11 +43,6 @@
           </div>
 
           <div class="mb-2">
-            <label for="info" class="form-label">Spesifik</label>
-            <input type="text" v-model="specific" class="form-control shadow-none" />
-          </div>
-
-          <div class="mb-2">
             <label for="info" class="form-label">Keterangan</label>
             <input type="text" v-model="info" class="form-control shadow-none" />
           </div>

@@ -17,7 +17,6 @@
               <th scope="col">Keterangan</th>
               <th scope="col">Jumlah</th>
               <th scope="col">Tag</th>
-              <th scope="col">Spesifik</th>
             </tr>
           </thead>
           <tbody>
@@ -37,16 +36,12 @@
               <td v-if="ex.type == 'expense'" class="text-danger">{{ ex.tag }}</td>
               <td v-else-if="ex.type == 'income'" class="text-success">{{ ex.tag }}</td>
               <td v-else>{{ ex.tag }}</td>
-              <td v-if="ex.type == 'expense'" class="text-danger">{{ ex.specific }}</td>
-              <td v-else-if="ex.type == 'income'" class="text-success">{{ ex.specific }}</td>
-              <td v-else>{{ ex.specific }}</td>
             </tr>
           </tbody>
           <tfoot class="table-light table-bordered">
             <tr>
               <td class="total-col" colspan="3">Total</td>
               <td class="total-col">{{ new Intl.NumberFormat("id-ID").format(totalAmmount) }} IDR</td>
-              <td></td>
               <td></td>
             </tr>
           </tfoot>
@@ -95,6 +90,10 @@
                   </option>
                 </select>
               </div>
+              <div class="mb-2">
+                <label for="tblSpec" class="form-label">Spesifik</label>
+                <input id="tblSpec" type="text" v-model="tblSpec" class="form-control shadow-none" />
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -119,6 +118,7 @@ export default {
       totalAmmount: 0,
       account: null,
       tag: null,
+      tblSpec: null,
       //specific: null,
       sd_table: null,
       ed_table: null,
@@ -134,7 +134,7 @@ export default {
         start: this.start_date_table,
         end: this.end_date_table,
       };
-      
+
       if (model.start == "" || model.start == null || model.start == undefined) {
         var itemStart = this.reports.at(0);
         var dateStart = itemStart.date;
@@ -148,7 +148,7 @@ export default {
         //startDate = moment.utc(model.start + "T00:00:00.000Z").toISOString();
         this.sd_table = this.start_date_table;
       }
-      
+
       if (model.end == "" || model.end == null || model.end == undefined) {
         var itemEnd = this.reports.at(-1);
         var dateEnd = itemEnd.date;
@@ -161,7 +161,7 @@ export default {
       } else {
         //endDate = moment.utc(model.end + "T23:59:59.000Z").toISOString();
         this.ed_tbl = this.end_date_table;
-      }      
+      }
     },
 
     setFilterData() {
@@ -182,7 +182,7 @@ export default {
         end_table: this.end_date_table,
         tags: this.tag_tbl,
         accounts: this.account_tbl,
-        spesifics: this.spesific_tbl,
+        spesifics: this.tblSpec,
       };
 
       var startDate;
@@ -227,7 +227,14 @@ export default {
           tblaccount = value.account == model.accounts;
         }
 
-        return dates >= startDate && dates <= endDate && tblTag && tblaccount;
+        var tblSpec;
+        if (model.spesifics == undefined || model.spesifics == null || model.spesifics == "" || model.spesifics == "-") {
+          tblSpec = value.info != null;
+        } else {
+          tblSpec = value.info.includes(model.spesifics);
+        }
+
+        return dates >= startDate && dates <= endDate && tblTag && tblaccount && tblSpec;
       });
 
       this.reportData = filteredData;

@@ -73,8 +73,6 @@ export default {
       calibrationsData: [],
       calibrations: [],
       selling: [],
-      start_date_out: null,
-      end_date_out: null,
       sd_out: null,
       ed_out: null,
       sumNetto: 0,
@@ -91,7 +89,10 @@ export default {
 
       var startDate;
       if (model.start == "" || model.start == null || model.start == undefined) {
-        var itemStart = this.calibrationsData.at(-1);
+        let theData = this.calibrations.filter(function (value) {
+          return value.date_out != "-";
+        });
+        var itemStart = theData.at(-1);
         var dateStart = itemStart.date_out;
         var arrStart = dateStart.split(" ");
         var theDateStart = arrStart[0];
@@ -106,7 +107,10 @@ export default {
 
       var endDate;
       if (model.end == "" || model.end == null || model.end == undefined) {
-        var itemEnd = this.calibrationsData.at(0);
+        let theData = this.calibrations.filter(function (value) {
+          return value.date_out != "-";
+        });
+        var itemEnd = theData.at(0);
         var dateEnd = itemEnd.date_out;
         var arrEnd = dateEnd.split(" ");
         var theDateEnd = arrEnd[0];

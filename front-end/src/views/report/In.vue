@@ -17,8 +17,12 @@
         </li>
         <li class="list-group-item">
           <div class="d-flex justify-content-between">
-            <span><b>Total ({{ new Intl.NumberFormat("id-ID").format(sumNetto) }} Kg)</b></span>
-            <span><b>{{ new Intl.NumberFormat("id-ID").format(sumTotalPrice) }} IDR</b></span>
+            <span
+              ><b>Total ({{ new Intl.NumberFormat("id-ID").format(sumNetto) }} Kg)</b></span
+            >
+            <span
+              ><b>{{ new Intl.NumberFormat("id-ID").format(sumTotalPrice) }} IDR</b></span
+            >
           </div>
         </li>
       </ul>
@@ -61,7 +65,7 @@
 
 <script>
 import { computed } from "@vue/reactivity";
-import moment from 'moment';
+import moment from "moment";
 export default {
   name: "In",
   data() {
@@ -69,8 +73,6 @@ export default {
       calibrationsData: [],
       calibrations: [],
       buying: [],
-      start_date_in: null,
-      end_date_in: null,
       sd_in: null,
       ed_in: null,
       sumNetto: 0,
@@ -87,7 +89,10 @@ export default {
 
       var startDate;
       if (model.start == "" || model.start == null || model.start == undefined) {
-        var itemStart = this.calibrationsData.at(-1);
+        let theData = this.calibrations.filter(function (value) {
+          return value.date_out != "-";
+        });
+        var itemStart = theData.at(-1);
         var dateStart = itemStart.date_out;
         var arrStart = dateStart.split(" ");
         var theDateStart = arrStart[0];
@@ -102,13 +107,16 @@ export default {
 
       var endDate;
       if (model.end == "" || model.end == null || model.end == undefined) {
-        var itemEnd = this.calibrationsData.at(0);
+        let theData = this.calibrations.filter(function (value) {
+          return value.date_out != "-";
+        });
+        var itemEnd = theData.at(0);
         var dateEnd = itemEnd.date_out;
         var arrEnd = dateEnd.split(" ");
         var theDateEnd = arrEnd[0];
         var newdateEnd = theDateEnd.split("-").reverse().join("-");
         var resultEnd = newdateEnd;
-        endDate = moment.utc(resultEnd+ "T23:59:59.000Z").toISOString();
+        endDate = moment.utc(resultEnd + "T23:59:59.000Z").toISOString();
         this.ed_in = resultEnd;
       } else {
         endDate = moment.utc(model.end + "T23:59:59.000Z").toISOString();
@@ -133,27 +141,26 @@ export default {
       var sellingList = [...new Set(buyingData.map((item) => item.product_name))];
 
       this.buying = [];
-      this.sumNetto = 0,
-      this.sumTotalPrice = 0,
+      (this.sumNetto = 0),
+        (this.sumTotalPrice = 0),
+        sellingList.forEach((element) => {
+          var data = buyingData.filter(function (value) {
+            return value.product_name == element;
+          });
+          var totalPrice = data.reduce(function (accumulator, item) {
+            return accumulator + parseInt(item.total_price);
+          }, 0);
+          var totalNetto = data.reduce(function (accumulator, item) {
+            return accumulator + parseInt(item.nett);
+          }, 0);
 
-      sellingList.forEach((element) => {
-        var data = buyingData.filter(function (value) {
-          return value.product_name == element;
+          this.sumNetto = parseInt(totalNetto + this.sumNetto);
+          this.sumTotalPrice = parseInt(totalPrice + this.sumTotalPrice);
+
+          var arrays = { product: element, totalNetto: totalNetto, totalPrice: totalPrice };
+
+          this.buying.push(arrays);
         });
-        var totalPrice = data.reduce(function (accumulator, item) {
-          return accumulator + parseInt(item.total_price);
-        }, 0);
-        var totalNetto = data.reduce(function (accumulator, item) {
-          return accumulator + parseInt(item.nett);
-        }, 0);
-
-        this.sumNetto = parseInt(totalNetto+this.sumNetto);
-        this.sumTotalPrice = parseInt(totalPrice+this.sumTotalPrice);
-
-        var arrays = { product: element, totalNetto: totalNetto, totalPrice: totalPrice };
-
-        this.buying.push(arrays);
-      });
     },
   },
 
