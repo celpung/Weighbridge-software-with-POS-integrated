@@ -30,6 +30,7 @@
     <Out />
     <In />
     <ProfitLost />
+    <Neraca />
   </div>
 </template>
 
@@ -39,12 +40,14 @@ import ProfitLost from "./ProfitLost.vue";
 import Out from "./Out.vue";
 import In from "./In.vue";
 import TransactionTable from "./TransactionTable.vue";
+import Neraca from "./Neraca.vue";
 export default {
   components: {
     ProfitLost,
     Out,
     In,
     TransactionTable,
+    Neraca,
   },
 
   data() {
@@ -58,11 +61,10 @@ export default {
   },
 
   methods: {
-    setData() {
+    setData() {      
       this.reports = computed(() => this.$store.state.reportData);
       this.calibrations = computed(() => this.$store.state.calibrationData);
       this.reportData = this.reports;
-      //this.counting();
     },
 
     setAccountValue() {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Neraca;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
@@ -403,5 +404,25 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::all();
         return response()->json($transaction);
+    }
+
+    public function neraca()
+    {
+        $neraca = Neraca::all();
+        return response()->json($neraca);
+    }
+
+    public function add_neraca(Request $request)
+    {
+        $neraca = new Neraca();
+        $neraca->month = $request->month;
+        $neraca->year = $request->year;
+        $neraca->type = $request->type;
+        $neraca->info = $request->info;
+        $neraca->ammount = $request->ammount;
+        $neraca->save();
+
+        $data = ['status' => "success", "messages" => "Data berhasil di input !"];
+        return response()->json($data);
     }
 }

@@ -27,10 +27,15 @@
 
       <div class="mb-2">
         <label for="select_type_neraca" class="form-label">Pilih Tipe</label>
-        <select id="select_type_neraca" v-model="typeNeraca" class="form-control" v-on:change="showTag()">
+        <select id="select_type_neraca" v-model="typeNeraca" class="form-control">
           <option>-</option>
-          <option value="tambah_dana">Aktiva</option>
-          <option value="expense">Pasiva</option>
+          <option value="Aktiva Lancar">Aktiva Lancar</option>
+          <option value="Aktiva Tetap">Aktiva Tetap</option>
+          <option value="Akumulasi Penyusutan">Akumulasi Penyusutan</option>
+          <option value="Aktiva Lainya">Aktiva Lainya</option>
+          <option value="Ekuitas">Ekuitas</option>
+          <option value="Utang Lancar">Utang Lancar</option>
+          <option value="Utang Jangka Panjang">Utang Jangka Panjang</option>
         </select>
       </div>
 
@@ -61,7 +66,14 @@ export default {
 
   methods: {
     addNeraca() {
-      axios.post("", {}).then((result) => {
+      let model = {
+        year: this.yearNeraca,
+        month: this.monthNeraca,
+        type: this.typeNeraca,
+        info: this.infoNeraca,
+        ammount: this.ammountNeraca
+      }
+      axios.post("add-neraca", model).then((result) => {
         if (result.data.status == "success") {
           this.$swal.fire("success", result.data.messages, "success");
         } else {

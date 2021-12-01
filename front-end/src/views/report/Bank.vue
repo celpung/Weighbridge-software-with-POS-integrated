@@ -58,13 +58,6 @@
           <form>
             <div class="modal-body">
               <div class="mb-2">
-                <label for="start_date" class="form-label">Dari Tanggal</label>
-                <div class="input-group">
-                  <input id="start_date" v-model="start_date" type="date" class="form-control shadow-none border-end-0" />
-                  <div class="input-group-text bg-white"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                </div>
-              </div>
-              <div class="mb-2">
                 <label for="end_date" class="form-label">Sampai Tanggal</label>
                 <div class="input-group">
                   <input id="end_date" v-model="end_date" type="date" class="form-control shadow-none border-end-0" />
@@ -129,7 +122,7 @@ export default {
         color: "#f35b3f",
         opacity: 0.7,
       });
-      axios.post('filter-bank', {start_date: this.start_date, end_date: this.end_date}).then((result) => {
+      axios.post('filter-bank', {start_date: "", end_date: this.end_date}).then((result) => {
         this.banks = result.data;
         loader.hide();
       });

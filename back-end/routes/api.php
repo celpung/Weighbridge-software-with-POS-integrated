@@ -91,6 +91,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-bank', [TransactionController::class, 'get_bank']);
     Route::post('filter-bank', [TransactionController::class, 'filter_bank']);
 
+    //neraca
+    Route::get('neraca', [TransactionController::class, 'neraca']);
+    Route::post('add-neraca', [TransactionController::class, 'add_neraca']);
+
     //book
     Route::get('get-expense', [TransactionController::class, 'get_expense']);
     Route::get('get-income', [TransactionController::class, 'get_income']);
